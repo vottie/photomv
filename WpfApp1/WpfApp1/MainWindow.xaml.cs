@@ -23,6 +23,15 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+
+            CommandBindings.Add(
+                new CommandBinding(ApplicationCommands.Close, CommandExecuted)
+            );
+        }
+
+        void CommandExecuted(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Hello world");
         }
     }
 }
