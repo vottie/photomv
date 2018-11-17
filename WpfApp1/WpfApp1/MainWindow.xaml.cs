@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using photomv;
 
 namespace WpfApp1
 {
@@ -32,6 +33,8 @@ namespace WpfApp1
         void CommandExecuted(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Hello world");
+            PhotoMVAction pmv = new PhotoMVAction("aaa", "bbb");
+            pmv.execute();
         }
     }
 }
