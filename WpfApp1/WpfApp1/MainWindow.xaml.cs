@@ -33,7 +33,10 @@ namespace WpfApp1
         void CommandExecuted(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Hello world");
-            PhotoMVAction pmv = new PhotoMVAction("aaa", "bbb");
+            string inDir = textBox1.Text;
+            string outDir = textBox2.Text;
+
+            PhotoMVAction pmv = new PhotoMVAction(inDir, outDir);
             pmv.execute();
         }
     }
