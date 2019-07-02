@@ -55,14 +55,18 @@ namespace photomv
                     return;
                 }
 
-                if(prepareCopyFile(dest))
+                if (prepareCopyFile(dest))
                 {
                     File.Copy(OrgPath, DestFilename, false);
                 }
-            } catch (System.IO.IOException e) {
+            }
+            catch (System.IO.IOException e)
+            {
                 Console.WriteLine("IOException occured. {0}", e.HResult);
                 Console.WriteLine("IOException occured. {0}", e.GetType());
-            } catch (UnauthorizedAccessException e) {
+            }
+            catch (UnauthorizedAccessException e)
+            {
                 /*
                  * If target is not file
                  * (in the case, Directory has specified),
@@ -81,7 +85,7 @@ namespace photomv
 
             try
             {
-                for (int i = 0; i < buff.Length -1; i++)
+                for (int i = 0; i < buff.Length - 1; i++)
                 {
                     if (buff[i] != '2')
                         continue;
@@ -100,7 +104,9 @@ namespace photomv
                         result = true;
                     }
                 }
-            } catch (System.IndexOutOfRangeException e) {
+            }
+            catch (System.IndexOutOfRangeException e)
+            {
                 Console.WriteLine("IndexOutOfRangeException occured. {0}", e.GetType());
             }
             Console.WriteLine("Image parse end");
@@ -151,14 +157,32 @@ namespace photomv
                 if ((File.Exists(destfilename)))
                 {
                     Console.WriteLine("Already exsists {0}", destfilename);
+                    string newname = rename(destfilename);
                     return false;
                 }
                 return true;
-            } catch (IOException e)
+            }
+            catch (IOException e)
             {
                 Console.WriteLine("preparedCopyFile IOException occured. {0}", e.GetType());
                 return false;
             }
+        }
+
+        public string rename(string fname)
+        {
+            string tmpname = "";
+            for (int i = 0; i < 10; i++)
+            {
+                tmpname = fname + i.ToString();
+                if (!File.Exists(tmpname))
+                {
+                    // tmp name is not exists.
+                    break;
+                }
+            }
+            Console.WriteLine("Rename orig:{0} new:{1}", fname, tmpname);
+            return tmpname;
         }
     }
 }
