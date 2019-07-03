@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace photomv
 {
-    class Image
+    public class Image
     {
         private string orgPath;
         private string year;
@@ -174,7 +174,8 @@ namespace photomv
             string tmpname = "";
             for (int i = 0; i < 10; i++)
             {
-                tmpname = fname + i.ToString();
+                // TODO fname separete with name and suffix
+                tmpname = fname + "_" + i.ToString();
                 if (!File.Exists(tmpname))
                 {
                     // tmp name is not exists.
