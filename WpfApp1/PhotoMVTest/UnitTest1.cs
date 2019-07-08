@@ -15,7 +15,7 @@ namespace PhotoMVTest
             Assert.AreEqual(result, "GGGG_0");
         }
 
-#if 0
+#if false
         [TestMethod]
         public void TestRenameIncrement()
         {
@@ -31,13 +31,13 @@ namespace PhotoMVTest
         }
 #endif
         [ClassInitialize]
-        public static ClassInit(TestContext ctx)
+        public static void ClassInit(TestContext ctx)
         {
             System.Console.WriteLine("Test Start");
         }
 
         [ClassCleanup]
-        public static ClassCleanup()
+        public static void ClassCleanup()
         {
             File.Delete("*.testdata");
         }
