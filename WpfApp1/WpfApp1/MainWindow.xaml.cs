@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 using photomv;
 
 namespace WpfApp1
@@ -52,7 +53,13 @@ namespace WpfApp1
             }
             Console.WriteLine(logfile);
 
-            
+            //Stream log_file = File.Create("photomv_trace.log");
+            //TextWriterTraceListener myTextListener = new TextWriterTraceListener(log_file);
+            TextWriterTraceListener myTextListener = new TextWriterTraceListener();
+            Trace.Listeners.Add(myTextListener);
+
+            Trace.Write("MainWindow start");
+
             InitializeComponent();
 
             CommandBindings.Add(
@@ -68,6 +75,8 @@ namespace WpfApp1
 
             PhotoMVAction pmv = new PhotoMVAction(inDir, outDir);
             pmv.execute();
+
+            Trace.Flush();
         }
     }
 }
