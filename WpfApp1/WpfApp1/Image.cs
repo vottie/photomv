@@ -171,19 +171,41 @@ namespace photomv
 
         public string rename(string fname)
         {
-            string tmpname = "";
-            for (int i = 0; i < 10; i++)
+            Console.WriteLine("rename() start");
+            // separate file name, file extension
+            string ext = Path.GetExtension(fname);
+            string tmpname = Path.GetFileNameWithoutExtension(fname);
+            int last = tmpname.Length;
+            Console.WriteLine("tmpname length {0}", last);
+
+            string result = "";
+            if (tmpname[last - 2] == '_')
+            {
+                Console.WriteLine("hit");
+                for (int i = 0; i < 10; i++)
+                {
+                    if (tmpname[last - 1] == (char)i)
+                    {
+                        Console.WriteLine("Already exsits file {0} ", tmpname);
+                        continue;
+                    } else
+                    {
+                        tmpname.Remove(last - 1, 1).Insert(last - 1, ((char)i).ToString());
+                        Console.WriteLine("Renamed {0} ", tmpname);
+                    }
+                }
+            } else
             {
                 // TODO fname separete with name and suffix
-                tmpname = fname + "_" + i.ToString();
-                if (!File.Exists(tmpname))
+                result = tmpname + "_0" + ext;
+                if (!File.Exists(result))
                 {
+                    Console.WriteLine("Rename orig:{0} new:{1}", fname, tmpname);
                     // tmp name is not exists.
-                    break;
+                    return result;
                 }
             }
-            Console.WriteLine("Rename orig:{0} new:{1}", fname, tmpname);
-            return tmpname;
+            return "";
         }
     }
 }

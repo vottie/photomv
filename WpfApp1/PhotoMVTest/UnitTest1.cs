@@ -11,25 +11,25 @@ namespace PhotoMVTest
         public void TestRename()
         {
             Image img = new Image("aaa", "bbb");
-            string result = img.rename("GGGG");
-            Assert.AreEqual(result, "GGGG_0");
+            string result = img.rename("GGGG.testdata");
+            Assert.AreEqual(result, "GGGG_0.testdata");
         }
 
-#if false
+
         [TestMethod]
         public void TestRenameIncrement()
         {
             // temporary file create
-            File.Create("./GGGG_0");
+            File.Create("GGGG_0.testdata");
 
             Image img = new Image("aaa", "bbb");
-            string result = img.rename("GGGG");
-            Assert.AreEqual(result, "GGGG_1");
+            string result = img.rename("GGGG_0.testdata");
+            Assert.AreEqual(result, "GGGG_1.testdata");
 
             // temporary file delete
-            File.Delete("./GGGG_0");
+            File.Delete("GGGG_0.testdata");
         }
-#endif
+
         [ClassInitialize]
         public static void ClassInit(TestContext ctx)
         {
@@ -39,7 +39,9 @@ namespace PhotoMVTest
         [ClassCleanup]
         public static void ClassCleanup()
         {
-            File.Delete("*.testdata");
+            System.IO.DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory());
+            System.IO.FileInfo[] files =
+                di.GetFiles("*.testdata", System.IO.SearchOption.AllDirectories);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +24,35 @@ namespace WpfApp1
     {
         public MainWindow()
         {
+            SetupFile ini = new SetupFile("./photomv.ini");
+
+            // write
+            // ini["section", "key"] = "vallue";
+
+            // read
+            string inDir5 = ini["section", "input_dir5"];
+            string inDir4 = ini["section", "input_dir4"];
+            string inDir3 = ini["section", "input_dir3"];
+            string inDir2 = ini["section", "input_dir2"];
+            string inDir1 = ini["section", "input_dir1"];
+            string outDir5 = ini["section", "output_dir5"];
+            string outDir4 = ini["section", "output_dir4"];
+            string outDir3 = ini["section", "output_dir3"];
+            string outDir2 = ini["section", "output_dir2"];
+            string outDir1 = ini["section", "output_dir1"];
+            string logfile = ini["section", "logfile"];
+
+            if (logfile == "")
+            {
+                ini["section", "logfile"] = "photomv.log";
+            }
+            if (File.Exists(logfile) == false)
+            {
+                File.CreateText(logfile);
+            }
+            Console.WriteLine(logfile);
+
+            
             InitializeComponent();
 
             CommandBindings.Add(
@@ -32,7 +62,7 @@ namespace WpfApp1
 
         void CommandExecuted(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Hello world");
+            // MessageBox.Show("Hello world");
             string inDir = textBox1.Text;
             string outDir = textBox2.Text;
 
