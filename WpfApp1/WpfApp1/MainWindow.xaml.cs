@@ -14,6 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+
+using Microsoft.WindowsAPICodePack.Dialogs;
+
+
 using photomv;
 
 namespace WpfApp1
@@ -65,6 +69,31 @@ namespace WpfApp1
             CommandBindings.Add(
                 new CommandBinding(ApplicationCommands.Close, CommandExecuted)
             );
+            
+        }
+
+        private void InputButtonClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog("入力フォルダ選択");
+            dialog.IsFolderPicker = true;
+            var ret = dialog.ShowDialog();
+
+            if (ret == CommonFileDialogResult.Ok)
+            {
+                textBox1.Text = dialog.FileName;
+            }
+        }
+
+        private void OutputButtonClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog("出力フォルダ選択");
+            dialog.IsFolderPicker = true;
+            var ret = dialog.ShowDialog();
+
+            if (ret == CommonFileDialogResult.Ok)
+            {
+                textBox2.Text = dialog.FileName;
+            }
         }
 
         void CommandExecuted(object sender, RoutedEventArgs e)

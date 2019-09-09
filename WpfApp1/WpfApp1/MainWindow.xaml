@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="PhotoMV" Height="300" Width="500">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Height="20" Margin="303,111,0,0" VerticalAlignment="Top" Width="72" Command="{x:Static ApplicationCommands.Close}"/>
-        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="29" Margin="67,111,0,0" TextWrapping="Wrap" Text="input" VerticalAlignment="Top" Width="180"/>
-        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="28" Margin="67,178,0,0" TextWrapping="Wrap" Text="target" VerticalAlignment="Top" Width="180"/>
+        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="30" Margin="30,60,0,0" TextWrapping="Wrap" Text="input" VerticalAlignment="Top" Width="200"/>
+        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="30" Margin="30,110,0,0" TextWrapping="Wrap" Text="target" VerticalAlignment="Top" Width="200"/>
+        <Button Content="入力フォルダ" HorizontalAlignment="Left" Height="30" Margin="280,60,0,0" VerticalAlignment="Top" Width="80" Name="InputBotton" Click="InputButtonClick"/>
+        <Button Content="出力フォルダ" HorizontalAlignment="Left" Height="30" Margin="280,110,0,0" VerticalAlignment="Top" Width="80" Name="OutputButton" Click="OutputButtonClick"/>
+        <Button Content="実行" HorizontalAlignment="Left" Height="30" Margin="100,180,0,0" VerticalAlignment="Top" Width="80" Command="{x:Static ApplicationCommands.Close}" RenderTransformOrigin="1.8,1.0"/>
+        <CheckBox Content="Rename" HorizontalAlignment="Left" Height="30" Margin="230,180,0,0" VerticalAlignment="Top" Width="80" Name="isRename"/>
+
 
     </Grid>
 </Window>
