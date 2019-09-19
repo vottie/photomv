@@ -5,17 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using WpfApp1;
+
 namespace photomv
 {
     class PhotoMVAction
     {
+        private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
         string src, dest;
         List<Image> list = new List<Image>();
 
-
         public PhotoMVAction(string indir, string outdir)
         {
-            Console.WriteLine("Photomv in={0} out={1}", indir, outdir);
+            log.Info("PhotoMVAction.PhotoMVAction() in={0} out={1}", indir, outdir);
             this.src = indir;
             this.dest = outdir;
         }
@@ -24,7 +26,7 @@ namespace photomv
         {
             if (!Directory.Exists(path))
             {
-                Console.WriteLine("Photomv not exists {0}", path);
+                log.Error("PhotoMVAction.searchDir() not exsits {0}", path);
                 return;
             }
             string[] files = Directory.GetFileSystemEntries(path);
@@ -33,11 +35,12 @@ namespace photomv
             foreach(string str in files)
             {
                 string ext = Path.GetExtension(str);
-                Console.WriteLine("name : {0} ext : {1}", str, ext);
+                log.Info("PhotoMVAction.searchDir() name={0} ext={1}", str, ext);
 
                 if ((ext == ".jpg") || (ext == ".JPG"))
                 {
-                    Console.WriteLine("target {0} filename {1}", str, Path.GetFileName(str));
+                    log.Info("PhotoMVAction.searchDir() target={0} filename={1}",
+                             str, Path.GetFileName(str));
 
                     string target;
                     if (dest.EndsWith("\\")) {
@@ -47,7 +50,7 @@ namespace photomv
                     }
                     Image img = new Image(str, Path.GetFileName(str));
                     list.Add(img);
-                    Console.WriteLine("destination {0}", target);
+                    log.Info("PhotoMVAction.searchDir() dest={0}", target);
                 } else {
                     if (Directory.Exists(str)) {
                         // child directory recursive
@@ -59,7 +62,7 @@ namespace photomv
 
         public void execute()
         {
-            Console.WriteLine("PhotoMVAction execute start in={0} out={1}", this.src, this.dest);
+            log.Info("PhotoMVAction.execute() start in={0} out={1}", this.src, this.dest);
             searchDir(src);
 
             foreach(Image img in list)
@@ -67,7 +70,7 @@ namespace photomv
                 //img.execute(dest);
                 //img.ResultMessage;
             }
-            Console.WriteLine("PhotoMVAction execute completed");
+            log.Info("PhotoMVAction.execute() end");
         }
     }
 }

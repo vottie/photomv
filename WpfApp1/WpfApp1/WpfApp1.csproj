@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logger.cs" />
     <Compile Include="PhotoMVSingleton.cs" />
     <Compile Include="SetupFile.cs" />
     <Page Include="MainWindow.xaml">

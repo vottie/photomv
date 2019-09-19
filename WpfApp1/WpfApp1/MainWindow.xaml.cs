@@ -27,6 +27,7 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
         public MainWindow()
         {
             SetupFile ini = new SetupFile("./photomv.ini");
@@ -98,12 +99,15 @@ namespace WpfApp1
 
         void CommandExecuted(object sender, RoutedEventArgs e)
         {
+            // = Logger.GetInstance()
             // MessageBox.Show("Hello world");
             string inDir = textBox1.Text;
             string outDir = textBox2.Text;
 
+            log.Info("MainWindow.CommandExecuted start");
             PhotoMVAction pmv = new PhotoMVAction(inDir, outDir);
             pmv.execute();
+            log.Info("MainWindow.CommandExecuted end");
 
             Trace.Flush();
         }
