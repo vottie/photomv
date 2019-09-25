@@ -5,10 +5,12 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace photomv
+namespace Photomv
 {
     public class Image
     {
+        private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
+
         private string orgPath;
         private string year;
         private string month;

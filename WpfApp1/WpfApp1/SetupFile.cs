@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices; // DLL Import
 
-namespace WpfApp1
+namespace Photomv
 {
     // Original source from
     // https://anis774.net/codevault/inifile.html

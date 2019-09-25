@@ -2,10 +2,8 @@
 using System.IO;
 using System.Text;
 
-namespace WpfApp1
+namespace Photomv
 {
-
-
     /*
      * 
      * Logger

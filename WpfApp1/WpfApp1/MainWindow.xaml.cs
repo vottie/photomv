@@ -17,10 +17,7 @@ using System.Diagnostics;
 
 using Microsoft.WindowsAPICodePack.Dialogs;
 
-
-using photomv;
-
-namespace WpfApp1
+namespace Photomv
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
@@ -32,10 +29,12 @@ namespace WpfApp1
         {
             SetupFile ini = new SetupFile("./photomv.ini");
 
+            PhotoMVSingleton pmvMgr = PhotoMVSingleton.GetInstance();
+
             // write
             // ini["section", "key"] = "vallue";
 
-            // read
+            // read ini file
             string inDir5 = ini["section", "input_dir5"];
             string inDir4 = ini["section", "input_dir4"];
             string inDir3 = ini["section", "input_dir3"];
@@ -47,6 +46,13 @@ namespace WpfApp1
             string outDir2 = ini["section", "output_dir2"];
             string outDir1 = ini["section", "output_dir1"];
             string logfile = ini["section", "logfile"];
+            string mode = ini["secion", "mode"];
+
+            // Set Parameter
+            if (mode == "debug")
+            {
+                pmvMgr.Mode = "debug";
+            }
 
             if (logfile == "")
             {

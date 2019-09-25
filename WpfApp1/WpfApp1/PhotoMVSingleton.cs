@@ -1,11 +1,12 @@
 ﻿using System;
 
-namespace WpfApp1
+namespace Photomv
 {
     class PhotoMVSingleton
     {
         private static PhotoMVSingleton _singleton = new PhotoMVSingleton();
 
+        private string mode;
         public static PhotoMVSingleton GetInstance()
         {
             return _singleton;
@@ -15,5 +16,7 @@ namespace WpfApp1
         {
 
         }
+
+        public string Mode { get => mode; set => mode = value; }
     }
 }
