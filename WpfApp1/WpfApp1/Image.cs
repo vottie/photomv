@@ -31,7 +31,7 @@ namespace photomv
         public string DestFilename { get => destfilename; set => destfilename = value; }
         public string ResultMessage { get => resultMessage; set => resultMessage = value; }
 
-        public void execute(string dest)
+        public void Execute(string dest)
         {
             Console.WriteLine("Image execute start dest : {0} orig : {1} filename : {2}",
                               dest, OrgPath, Filename);
@@ -49,13 +49,13 @@ namespace photomv
                 fs.Close();
 
                 char[] cBuff = System.Text.Encoding.GetEncoding(932).GetString(buff).ToCharArray();
-                if (!parse(cBuff))
+                if (!Parse(cBuff))
                 {
                     Console.WriteLine("Fail {0}", OrgPath);
                     return;
                 }
 
-                if (prepareCopyFile(dest))
+                if (PrepareCopyFile(dest))
                 {
                     File.Copy(OrgPath, DestFilename, false);
                 }
@@ -76,7 +76,7 @@ namespace photomv
             }
         }
 
-        public bool parse(char[] buff)
+        public bool Parse(char[] buff)
         {
             Console.WriteLine("Image parse start");
             Console.WriteLine("byte length {0}", buff.Length);
@@ -114,7 +114,7 @@ namespace photomv
             return result;
         }
 
-        public bool prepareCopyFile(string outDir)
+        public bool PrepareCopyFile(string outDir)
         {
             try
             {
@@ -157,7 +157,7 @@ namespace photomv
                 if ((File.Exists(destfilename)))
                 {
                     Console.WriteLine("Already exsists {0}", destfilename);
-                    string newname = rename(destfilename);
+                    string newname = Rename(destfilename);
                     return false;
                 }
                 return true;
@@ -169,7 +169,7 @@ namespace photomv
             }
         }
 
-        public string rename(string fname)
+        public string Rename(string fname)
         {
             Console.WriteLine("rename() start");
             // separate file name, file extension

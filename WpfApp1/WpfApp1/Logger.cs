@@ -54,7 +54,7 @@ namespace WpfApp1
         }
 
 
-        private void write(Level level, string text)
+        private void Write(Level level, string text)
         {
             char l = level.ToString()[0];
             string lvl = "|" + l + "|";
@@ -68,12 +68,12 @@ namespace WpfApp1
 
         public void Error(string text)
         {
-            write(Level.ERROR, text);
+            Write(Level.ERROR, text);
         }
 
         public void Error(Exception ex)
         {
-            write(Level.ERROR, ex.Message + Environment.NewLine + ex.StackTrace);
+            Write(Level.ERROR, ex.Message + Environment.NewLine + ex.StackTrace);
         }
 
         public void Error(string format, object arg)
@@ -89,7 +89,7 @@ namespace WpfApp1
 
         public void Trace(string text)
         {
-            write(Level.TRACE, text);
+            Write(Level.TRACE, text);
         }
 
         public void Trace(string format, object arg)
@@ -104,7 +104,7 @@ namespace WpfApp1
 
         public void Info(string text)
         {
-            write(Level.INFO, text);
+            Write(Level.INFO, text);
         }
 
         public void Info(string format, object arg)

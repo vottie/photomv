@@ -11,7 +11,7 @@ namespace PhotoMVTest
         public void TestRename()
         {
             Image img = new Image("aaa", "bbb");
-            string result = img.rename("GGGG.testdata");
+            string result = img.Rename("GGGG.testdata");
             Assert.AreEqual(result, "GGGG_0.testdata");
         }
 
@@ -23,7 +23,7 @@ namespace PhotoMVTest
             File.Create("GGGG_0.testdata");
 
             Image img = new Image("aaa", "bbb");
-            string result = img.rename("GGGG_0.testdata");
+            string result = img.Rename("GGGG_0.testdata");
             Assert.AreEqual(result, "GGGG_1.testdata");
 
             // temporary file delete

@@ -106,7 +106,7 @@ namespace WpfApp1
 
             log.Info("MainWindow.CommandExecuted start");
             PhotoMVAction pmv = new PhotoMVAction(inDir, outDir);
-            pmv.execute();
+            pmv.Execute();
             log.Info("MainWindow.CommandExecuted end");
 
             Trace.Flush();

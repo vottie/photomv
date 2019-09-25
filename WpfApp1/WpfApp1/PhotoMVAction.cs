@@ -22,7 +22,7 @@ namespace photomv
             this.dest = outdir;
         }
             
-        private void searchDir(string path)
+        private void SearchDir(string path)
         {
             if (!Directory.Exists(path))
             {
@@ -54,16 +54,16 @@ namespace photomv
                 } else {
                     if (Directory.Exists(str)) {
                         // child directory recursive
-                        searchDir(str);
+                        SearchDir(str);
                     }
                 }
             }
         }
 
-        public void execute()
+        public void Execute()
         {
             log.Info("PhotoMVAction.execute() start in={0} out={1}", this.src, this.dest);
-            searchDir(src);
+            SearchDir(src);
 
             foreach(Image img in list)
             {
