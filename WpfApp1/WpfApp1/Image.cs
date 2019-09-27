@@ -35,8 +35,7 @@ namespace Photomv
 
         public void Execute(string dest)
         {
-            Console.WriteLine("Image execute start dest : {0} orig : {1} filename : {2}",
-                              dest, OrgPath, Filename);
+            log.Info("Image.Execute() dest={0} orig={1} filename={2}", dest, OrgPath, Filename);
             try
             {
                 FileStream fs;
@@ -47,25 +46,28 @@ namespace Photomv
                 // read 1024byte from file's head 
                 byte[] buff = new byte[1024];
                 fs.Read(buff, 0, 1024);
-
                 fs.Close();
 
                 char[] cBuff = System.Text.Encoding.GetEncoding(932).GetString(buff).ToCharArray();
                 if (!Parse(cBuff))
                 {
-                    Console.WriteLine("Fail {0}", OrgPath);
+                    log.Error("Fail {0}", OrgPath);
                     return;
                 }
 
                 if (PrepareCopyFile(dest))
                 {
+                    if (PhotoMVSingleton.GetInstance().Mode == "debug") {
+                        log.Info("Image.Execute pseudo");
+                        return;
+                    }
                     File.Copy(OrgPath, DestFilename, false);
                 }
             }
             catch (System.IO.IOException e)
             {
-                Console.WriteLine("IOException occured. {0}", e.HResult);
-                Console.WriteLine("IOException occured. {0}", e.GetType());
+                log.Error("IOException occured. {0}", e.HResult);
+                log.Error("IOException occured. {0}", e.GetType());
             }
             catch (UnauthorizedAccessException e)
             {
@@ -74,15 +76,13 @@ namespace Photomv
                  * (in the case, Directory has specified),
                  * UnauthorizedAccessException occured.
                  */
-                Console.WriteLine("Error {0}", e.GetType());
+                log.Error("Error {0}", e.GetType());
             }
         }
 
         public bool Parse(char[] buff)
         {
-            Console.WriteLine("Image parse start");
-            Console.WriteLine("byte length {0}", buff.Length);
-
+            log.Info("Image.Parse() start byteLen={0}", buff.Length);
             bool result = false;
 
             try
@@ -99,7 +99,7 @@ namespace Photomv
                         string date = new string(buff, i, 10);
 
                         //Console.WriteLine("byte {0}", buff[i]);
-                        Console.WriteLine("parse {0}/{1}/{2}", year, month, date);
+                        log.Info("Image.Parse() {0}/{1}/{2}", year, month, date);
                         Year = year;
                         Month = month;
                         Date = date;
@@ -109,9 +109,9 @@ namespace Photomv
             }
             catch (System.IndexOutOfRangeException e)
             {
-                Console.WriteLine("IndexOutOfRangeException occured. {0}", e.GetType());
+                log.Error("Image.Parse() IndexOutOfRangeException occured. {0}", e.GetType());
             }
-            Console.WriteLine("Image parse end");
+            log.Info("Image.Parse() end");
 
             return result;
         }
@@ -120,7 +120,7 @@ namespace Photomv
         {
             try
             {
-                Console.WriteLine("prepareCopyFile {0}", outDir);
+                log.Info("Image.PrepareCopyFile() start outdir={0}", outDir);
                 if (!(Directory.Exists(outDir)))
                 {
                     Directory.CreateDirectory(outDir);
@@ -155,10 +155,10 @@ namespace Photomv
                 buffer2.Append("\\");
                 buffer2.Append(Filename);
                 destfilename = buffer2.ToString();
-                Console.WriteLine("preparedCopyFile end {0}", destfilename);
+                log.Info("Image.PreparedCopyFile() end dest={0}", destfilename);
                 if ((File.Exists(destfilename)))
                 {
-                    Console.WriteLine("Already exsists {0}", destfilename);
+                    log.Info("Image.PreparedCopyFile() Already exsists {0}", destfilename);
                     string newname = Rename(destfilename);
                     return false;
                 }
@@ -166,19 +166,19 @@ namespace Photomv
             }
             catch (IOException e)
             {
-                Console.WriteLine("preparedCopyFile IOException occured. {0}", e.GetType());
+                log.Error("Image.PreparedCopyFile IOException occured. {0}", e.GetType());
                 return false;
             }
         }
 
         public string Rename(string fname)
         {
-            Console.WriteLine("rename() start");
+            log.Info("Image.Rename start");
             // separate file name, file extension
             string ext = Path.GetExtension(fname);
             string tmpname = Path.GetFileNameWithoutExtension(fname);
             int last = tmpname.Length;
-            Console.WriteLine("tmpname length {0}", last);
+            log.Info("Image.Rename tmpname length {0}", last);
 
             string result = "";
             if (tmpname[last - 2] == '_')
@@ -188,12 +188,12 @@ namespace Photomv
                 {
                     if (tmpname[last - 1] == (char)i)
                     {
-                        Console.WriteLine("Already exsits file {0} ", tmpname);
+                        log.Info("Image.Rename already exsists file {0}", tmpname);
                         continue;
                     } else
                     {
                         tmpname.Remove(last - 1, 1).Insert(last - 1, ((char)i).ToString());
-                        Console.WriteLine("Renamed {0} ", tmpname);
+                        log.Info("Image.Rename done {0}", tmpname);
                     }
                 }
             } else
@@ -202,7 +202,7 @@ namespace Photomv
                 result = tmpname + "_0" + ext;
                 if (!File.Exists(result))
                 {
-                    Console.WriteLine("Rename orig:{0} new:{1}", fname, tmpname);
+                    log.Info("Image.Rename orig:{0} new:{1}", fname, tmpname);
                     // tmp name is not exists.
                     return result;
                 }

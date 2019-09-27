@@ -46,7 +46,7 @@ namespace Photomv
             string outDir2 = ini["section", "output_dir2"];
             string outDir1 = ini["section", "output_dir1"];
             string logfile = ini["section", "logfile"];
-            string mode = ini["secion", "mode"];
+            string mode = ini["section", "mode"];
 
             // Set Parameter
             if (mode == "debug")
@@ -72,6 +72,7 @@ namespace Photomv
             Trace.Write("MainWindow start");
 
             InitializeComponent();
+            log.Info("PhotoMV mode={0}", pmvMgr.Mode);
 
             CommandBindings.Add(
                 new CommandBinding(ApplicationCommands.Close, CommandExecuted)

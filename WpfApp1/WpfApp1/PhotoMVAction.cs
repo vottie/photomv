@@ -66,7 +66,7 @@ namespace Photomv
 
             foreach(Image img in list)
             {
-                //img.execute(dest);
+                img.Execute(dest);
                 //img.ResultMessage;
             }
             log.Info("PhotoMVAction.execute() end");
