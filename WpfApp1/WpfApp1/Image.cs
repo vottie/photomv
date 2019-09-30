@@ -59,6 +59,7 @@ namespace Photomv
                 {
                     if (PhotoMVSingleton.GetInstance().Mode == "debug") {
                         log.Info("Image.Execute pseudo");
+                        PhotoMVStat.copy_success_times++;
                         return;
                     }
                     File.Copy(OrgPath, DestFilename, false);

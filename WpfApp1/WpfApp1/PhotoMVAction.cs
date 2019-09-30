@@ -19,6 +19,10 @@ namespace Photomv
             log.Info("PhotoMVAction.PhotoMVAction() in={0} out={1}", indir, outdir);
             this.src = indir;
             this.dest = outdir;
+
+            // statistics initialize
+            PhotoMVStat stat = PhotoMVStat.GetInstance();
+            stat.Initialize();
         }
             
         private void SearchDir(string path)
@@ -69,6 +73,8 @@ namespace Photomv
                 img.Execute(dest);
                 //img.ResultMessage;
             }
+            PhotoMVStat stat = PhotoMVStat.GetInstance();
+            stat.Output();
             log.Info("PhotoMVAction.execute() end");
         }
     }
