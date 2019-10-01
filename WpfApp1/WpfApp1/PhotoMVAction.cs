@@ -16,7 +16,9 @@ namespace Photomv
 
         public PhotoMVAction(string indir, string outdir)
         {
-            log.Info("PhotoMVAction.PhotoMVAction() in={0} out={1}", indir, outdir);
+            bool isRename = PhotoMVSingleton.GetInstance().IsRename;
+            log.Info("PhotoMVAction.PhotoMVAction() in={0} out={1} isRename={2}",
+                indir, outdir, isRename);
             this.src = indir;
             this.dest = outdir;
 
@@ -66,6 +68,9 @@ namespace Photomv
         public void Execute()
         {
             log.Info("PhotoMVAction.execute() start in={0} out={1}", this.src, this.dest);
+
+            log.Info("Manager IsRenamed = {0}", PhotoMVSingleton.GetInstance().IsRename);
+
             SearchDir(src);
 
             foreach(Image img in list)

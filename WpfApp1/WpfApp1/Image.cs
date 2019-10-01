@@ -160,6 +160,7 @@ namespace Photomv
                 if ((File.Exists(destfilename)))
                 {
                     log.Info("Image.PreparedCopyFile() Already exsists {0}", destfilename);
+                    PhotoMVStat.already_exists++;
                     string newname = Rename(destfilename);
                     return false;
                 }

@@ -14,6 +14,7 @@ namespace Photomv
 
         public static uint copy_success_times;
         public static uint copy_fail_times;
+        public static uint already_exists;
 
         public static PhotoMVStat GetInstance()
         {
@@ -28,6 +29,7 @@ namespace Photomv
         {
             copy_success_times = 0;
             copy_fail_times = 0;
+            already_exists = 0;
         }
 
         public void Output()
@@ -35,6 +37,7 @@ namespace Photomv
             log.Info("========= PhotoMV Statistics ========");
             log.Info("copy successed : {0} times", copy_success_times);
             log.Info("copy failed    : {0} times", copy_fail_times);
+            log.Info("already exists : {0} times", already_exists);
             log.Info("========= PhotoMV Statistics ========");
         }
     }

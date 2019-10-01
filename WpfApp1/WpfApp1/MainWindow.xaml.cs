@@ -110,6 +110,9 @@ namespace Photomv
             // MessageBox.Show("Hello world");
             string inDir = textBox1.Text;
             string outDir = textBox2.Text;
+            bool isRename = (bool)RenameCheck.IsChecked;
+            PhotoMVSingleton mgr = PhotoMVSingleton.GetInstance();
+            mgr.IsRename = isRename;
 
             log.Info("MainWindow.CommandExecuted start");
             PhotoMVAction pmv = new PhotoMVAction(inDir, outDir);
