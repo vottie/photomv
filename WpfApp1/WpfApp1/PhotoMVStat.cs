@@ -30,15 +30,6 @@ namespace Photomv
             copy_fail_times = 0;
         }
 
-        public void CountSucess()
-        {
-            copy_success_times++;
-        }
-
-        public void CountFail()
-        {
-            copy_fail_times++;
-        }
         public void Output()
         {
             log.Info("========= PhotoMV Statistics ========");

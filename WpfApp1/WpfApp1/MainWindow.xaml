@@ -12,7 +12,7 @@
         <Button Content="入力フォルダ" HorizontalAlignment="Left" Height="30" Margin="280,60,0,0" VerticalAlignment="Top" Width="80" Name="InputBotton" Click="InputButtonClick"/>
         <Button Content="出力フォルダ" HorizontalAlignment="Left" Height="30" Margin="280,110,0,0" VerticalAlignment="Top" Width="80" Name="OutputButton" Click="OutputButtonClick"/>
         <Button Content="実行" HorizontalAlignment="Left" Height="30" Margin="100,180,0,0" VerticalAlignment="Top" Width="80" Command="{x:Static ApplicationCommands.Close}" RenderTransformOrigin="1.8,1.0"/>
-        <CheckBox Content="Rename" HorizontalAlignment="Left" Height="30" Margin="230,180,0,0" VerticalAlignment="Top" Width="80" Name="isRename"/>
+        <CheckBox Content="Rename" HorizontalAlignment="Left" Height="30" Margin="230,180,0,0" VerticalAlignment="Top" Width="80" Name="isRename" IsChecked="True"/>
 
 
     </Grid>
