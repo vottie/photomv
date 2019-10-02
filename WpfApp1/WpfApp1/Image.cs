@@ -14,7 +14,10 @@ namespace Photomv
         private string orgPath;
         private string year;
         private string month;
-        private string date;
+        private string day;
+        private string hour;
+        private string minute;
+        private string second;
         private string filename;
         private string destfilename;
         private string resultMessage;
@@ -28,58 +31,14 @@ namespace Photomv
         public string OrgPath { get => orgPath; set => orgPath = value; }
         public string Year { get => year; set => year = value; }
         public string Month { get => month; set => month = value; }
-        public string Date { get => date; set => date = value; }
+        public string Day { get => day; set => day = value; }
+        public string Hour { get => hour; set => hour = value; }
+        public string Minute { get => minute; set => minute = value; }
+        public string Second { get => second; set => second = value; }
         public string Filename { get => filename; set => filename = value; }
         public string DestFilename { get => destfilename; set => destfilename = value; }
         public string ResultMessage { get => resultMessage; set => resultMessage = value; }
 
-        public void Execute(string dest)
-        {
-            log.Info("Image.Execute() dest={0} orig={1} filename={2}", dest, OrgPath, Filename);
-            try
-            {
-                FileStream fs;
-                fs = new FileStream(OrgPath,
-                                    FileMode.Open,
-                                    FileAccess.Read,
-                                    FileShare.ReadWrite);
-                // read 1024byte from file's head 
-                byte[] buff = new byte[1024];
-                fs.Read(buff, 0, 1024);
-                fs.Close();
-
-                char[] cBuff = System.Text.Encoding.GetEncoding(932).GetString(buff).ToCharArray();
-                if (!Parse(cBuff))
-                {
-                    log.Error("Fail {0}", OrgPath);
-                    return;
-                }
-
-                if (PrepareCopyFile(dest))
-                {
-                    if (PhotoMVSingleton.GetInstance().Mode == "debug") {
-                        log.Info("Image.Execute pseudo");
-                        PhotoMVStat.copy_success_times++;
-                        return;
-                    }
-                    File.Copy(OrgPath, DestFilename, false);
-                }
-            }
-            catch (System.IO.IOException e)
-            {
-                log.Error("IOException occured. {0}", e.HResult);
-                log.Error("IOException occured. {0}", e.GetType());
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                /*
-                 * If target is not file
-                 * (in the case, Directory has specified),
-                 * UnauthorizedAccessException occured.
-                 */
-                log.Error("Error {0}", e.GetType());
-            }
-        }
 
         public bool Parse(char[] buff)
         {
@@ -93,20 +52,32 @@ namespace Photomv
                     if (buff[i] != '2')
                         continue;
                     // search 2yyy:mm:dd
-                    if ((buff[i + 1] == '0') && (buff[i + 4] == ':'))
+                    // i's value is '2'
+                    if ((buff[i + 1] == '0') && (buff[i + 4] == ':') && (buff[i + 7] == ':'))
                     {
                         string year = new string(buff, i, 4);
                         string month = new string(buff, i + 5, 2);
-                        string date = new string(buff, i, 10);
+                        string day = new string(buff, i + 8, 2);
 
-                        //Console.WriteLine("byte {0}", buff[i]);
-                        log.Info("Image.Parse() {0}/{1}/{2}", year, month, date);
                         Year = year;
                         Month = month;
-                        Date = date;
-                        result = true;
+                        Day = day;
+
+                        if ((buff[i + 10] == 0x20) && (buff[i + 13] == ':') && (buff[i + 16] == ':'))
+                        {
+                            string hour = new string(buff, i + 11, 2);
+                            string minute = new string(buff, i + 14, 2);
+                            string second = new string(buff, i + 17, 2);
+
+                            Hour = hour;
+                            Minute = minute;
+                            Second = second;
+                            result = true;
+                            break;
+                        }
                     }
                 }
+                log.Debug("Image.Parse() {0}/{1}/{2} {3}:{4}:{5}", year, month, day, hour, minute, second);
             }
             catch (System.IndexOutOfRangeException e)
             {
@@ -117,6 +88,10 @@ namespace Photomv
             return result;
         }
 
+        public bool ParseFromTail(char[] buff)
+        {
+            return Parse(buff);
+        }
         public bool PrepareCopyFile(string outDir)
         {
             try

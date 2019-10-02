@@ -78,6 +78,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Photo.cs" />
+    <Compile Include="Video.cs" />
     <Compile Include="PhotoMVStat.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="PhotoMVSingleton.cs" />

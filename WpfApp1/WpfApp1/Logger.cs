@@ -100,6 +100,21 @@ namespace Photomv
             Trace(string.Format(format, args));
         }
 
+        public void Debug(string text)
+        {
+            Write(Level.DEBUG, text);
+        }
+
+        public void Debug(string format, object arg)
+        {
+            Debug(string.Format(format, arg));
+        }
+
+        public void Debug(string format, params object[] args)
+        {
+            Debug(string.Format(format, args));
+        }
+
         public void Info(string text)
         {
             Write(Level.INFO, text);

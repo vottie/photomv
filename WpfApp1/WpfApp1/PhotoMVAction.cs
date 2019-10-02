@@ -12,7 +12,8 @@ namespace Photomv
     {
         private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
         string src, dest;
-        List<Image> list = new List<Image>();
+        List<Photo> photos = new List<Photo>();
+        List<Video> videos = new List<Video>();
 
         public PhotoMVAction(string indir, string outdir)
         {
@@ -37,14 +38,17 @@ namespace Photomv
             string[] files = Directory.GetFileSystemEntries(path);
 
             // str is full path
-            foreach(string str in files)
+            foreach (string str in files)
             {
                 string ext = Path.GetExtension(str);
                 log.Info("PhotoMVAction.searchDir() name={0} ext={1}", str, ext);
 
+                /*
+                 *  JPEG file processing
+                 */
                 if ((ext == ".jpg") || (ext == ".JPG"))
                 {
-                    log.Info("PhotoMVAction.searchDir() target={0} filename={1}",
+                    log.Debug("PhotoMVAction.searchDir() JPEG target={0} filename={1}",
                              str, Path.GetFileName(str));
 
                     string target;
@@ -53,10 +57,36 @@ namespace Photomv
                     } else {
                         target = dest + "\\" + Path.GetFileName(str);
                     }
-                    Image img = new Image(str, Path.GetFileName(str));
-                    list.Add(img);
-                    log.Info("PhotoMVAction.searchDir() dest={0}", target);
-                } else {
+                    Photo photo = new Photo(str, Path.GetFileName(str));
+                    photos.Add(photo);
+
+                    log.Debug("PhotoMVAction.searchDir() dest={0}", target);
+                }
+                /*
+                 *  MOV file processing
+                 */
+                else if ((ext == ".mov") || (ext == ".MOV"))
+                {
+                    log.Debug("PhotoMVAction.searchDir() MOV target={0} filename={1}",
+                             str, Path.GetFileName(str));
+
+                    string target;
+                    if (dest.EndsWith("\\"))
+                    {
+                        target = dest + Path.GetFileName(str);
+                    }
+                    else
+                    {
+                        target = dest + "\\" + Path.GetFileName(str);
+                    }
+                    Video video = new Video(str, Path.GetFileName(str));
+                    videos.Add(video);
+
+                    log.Debug("PhotoMVAction.searchDir() dest={0}", target);
+
+
+                }
+                else {
                     if (Directory.Exists(str)) {
                         // child directory recursive
                         SearchDir(str);
@@ -69,15 +99,21 @@ namespace Photomv
         {
             log.Info("PhotoMVAction.execute() start in={0} out={1}", this.src, this.dest);
 
-            log.Info("Manager IsRenamed = {0}", PhotoMVSingleton.GetInstance().IsRename);
-
             SearchDir(src);
 
-            foreach(Image img in list)
+            foreach(Photo photo in photos)
             {
-                img.Execute(dest);
+                photo.Execute(dest);
                 //img.ResultMessage;
             }
+
+            foreach (Video video in videos)
+            {
+                video.Execute(dest);
+                //img.ResultMessage;
+            }
+
+
             PhotoMVStat stat = PhotoMVStat.GetInstance();
             stat.Output();
             log.Info("PhotoMVAction.execute() end");
