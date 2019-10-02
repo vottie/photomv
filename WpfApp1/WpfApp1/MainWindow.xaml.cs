@@ -25,10 +25,9 @@ namespace Photomv
     public partial class MainWindow : Window
     {
         private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
+        SetupFile ini = new SetupFile("./photomv.ini");
         public MainWindow()
         {
-            SetupFile ini = new SetupFile("./photomv.ini");
-
             PhotoMVSingleton pmvMgr = PhotoMVSingleton.GetInstance();
 
             // write
@@ -77,7 +76,12 @@ namespace Photomv
             CommandBindings.Add(
                 new CommandBinding(ApplicationCommands.Close, CommandExecuted)
             );
-            
+
+            if ((inDir1 != "") && (outDir1 != ""))
+            {
+                textBox1.Text = inDir1;
+                textBox2.Text = outDir1;
+            }
         }
 
         private void InputButtonClick(object sender, RoutedEventArgs e)
@@ -120,6 +124,14 @@ namespace Photomv
             log.Info("MainWindow.CommandExecuted end");
 
             Trace.Flush();
+        }
+
+        protected virtual void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // record history
+            ini["section", "input_dir1"] = textBox1.Text;
+            ini["section", "output_dir1"] = textBox2.Text;
+            return;
         }
     }
 }

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Photomv"
         mc:Ignorable="d"
-        Title="PhotoMV" Height="300" Width="500">
+        Title="PhotoMV" Height="300" Width="500"
+        Closing="WindowClosing">
     <Grid>
         <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="30" Margin="30,60,0,0" TextWrapping="Wrap" Text="input" VerticalAlignment="Top" Width="200"/>
         <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="30" Margin="30,110,0,0" TextWrapping="Wrap" Text="target" VerticalAlignment="Top" Width="200"/>
