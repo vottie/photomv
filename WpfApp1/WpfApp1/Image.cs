@@ -90,8 +90,52 @@ namespace Photomv
 
         public bool ParseFromTail(char[] buff)
         {
-            return Parse(buff);
+            log.Info("Image.ParseFromTail() start byteLen={0}", buff.Length);
+            bool result = false;
+
+            try
+            {
+                for (int i = 0; i < buff.Length - 1; i++)
+                {
+                    if (buff[i] != '2')
+                        continue;
+                    // search 2yyy-mm-dd
+                    // i's value is '2'
+                    if ((buff[i + 1] == '0') && (buff[i + 4] == '-') && (buff[i + 7] == '-'))
+                    {
+                        string year = new string(buff, i, 4);
+                        string month = new string(buff, i + 5, 2);
+                        string day = new string(buff, i + 8, 2);
+
+                        Year = year;
+                        Month = month;
+                        Day = day;
+                        // 2yyyy-mm-ddThh:mm:ss (T is 0x54)
+                        if ((buff[i + 10] == 0x54) && (buff[i + 13] == ':') && (buff[i + 16] == ':'))
+                        {
+                            string hour = new string(buff, i + 11, 2);
+                            string minute = new string(buff, i + 14, 2);
+                            string second = new string(buff, i + 17, 2);
+
+                            Hour = hour;
+                            Minute = minute;
+                            Second = second;
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+                log.Debug("Image.ParseFromTail() {0}/{1}/{2} {3}:{4}:{5}", year, month, day, hour, minute, second);
+            }
+            catch (System.IndexOutOfRangeException e)
+            {
+                log.Error("Image.ParseFromTail() IndexOutOfRangeException occured. {0}", e.GetType());
+            }
+            log.Info("Image.ParseFromTail() end");
+
+            return result;
         }
+
         public bool PrepareCopyFile(string outDir)
         {
             try

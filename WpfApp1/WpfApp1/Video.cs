@@ -32,15 +32,18 @@ namespace Photomv
                 {
                     /*
                      *  iPhone
+                     *    format : yyyy-mm-ddThh:mm:ss
                      */
-                    byte[] rbuff = new byte[4096];
+                    byte[] rbuff = new byte[4096]; // reverse buffer
                     long offset = fs.Seek(-4096, SeekOrigin.End);
-                    FileInfo file = new FileInfo(OrgPath);
-                    fs.Position = file.Length - 4096;
+                    // FileInfo file = new FileInfo(OrgPath);
+                    // fs.Position = file.Length - 4096;
+                    // log.Debug("Video.Execute() seek offset = {0} finfo.Length = {1}", offset, file.Length);
+
                     fs.Read(rbuff, 0, 4096);
                     char[] rcBuff = System.Text.Encoding.GetEncoding(932).GetString(rbuff).ToCharArray();
 
-                    if (ParseFromTail(rcBuff))
+                    if (!ParseFromTail(rcBuff))
                     {
                         log.Error("Fail {0}", OrgPath);
                         return;
