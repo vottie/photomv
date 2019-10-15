@@ -11,6 +11,9 @@ namespace Photomv
     class PhotoMVAction
     {
         private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
+
+        public static readonly string version = "0.9.0";
+
         string src, dest;
         List<Photo> photos = new List<Photo>();
         List<Video> videos = new List<Video>();
@@ -18,6 +21,7 @@ namespace Photomv
         public PhotoMVAction(string indir, string outdir)
         {
             bool isRename = PhotoMVSingleton.GetInstance().IsRename;
+            log.Info("PhotoMVAction Version={0}", version);
             log.Info("PhotoMVAction.PhotoMVAction() in={0} out={1} isRename={2}",
                 indir, outdir, isRename);
             this.src = indir;
