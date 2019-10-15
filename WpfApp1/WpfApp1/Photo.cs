@@ -32,6 +32,7 @@ namespace Photomv
                 if (!Parse(cBuff))
                 {
                     log.Error("Photo.Execute() Fail {0}", OrgPath);
+                    PhotoMVStat.copy_fail_times++;
                     return;
                 }
 
