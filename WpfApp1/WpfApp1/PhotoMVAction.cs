@@ -45,7 +45,7 @@ namespace Photomv
             foreach (string str in files)
             {
                 string ext = Path.GetExtension(str);
-                log.Info("PhotoMVAction.searchDir() name={0} ext={1}", str, ext);
+                log.Debug("PhotoMVAction.searchDir() name={0} ext={1}", str, ext);
 
                 /*
                  *  JPEG file processing
@@ -101,7 +101,7 @@ namespace Photomv
 
         public void Execute()
         {
-            log.Info("PhotoMVAction.execute() start in={0} out={1}", this.src, this.dest);
+            log.Debug("PhotoMVAction.execute() start in={0} out={1}", this.src, this.dest);
 
             SearchDir(src);
 

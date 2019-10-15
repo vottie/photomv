@@ -42,7 +42,7 @@ namespace Photomv
 
         public bool Parse(char[] buff)
         {
-            log.Info("Image.Parse() start byteLen={0}", buff.Length);
+            log.Debug("Image.Parse() start byteLen={0}", buff.Length);
             bool result = false;
 
             try
@@ -83,14 +83,14 @@ namespace Photomv
             {
                 log.Error("Image.Parse() IndexOutOfRangeException occured. {0}", e.GetType());
             }
-            log.Info("Image.Parse() end");
+            log.Debug("Image.Parse() end");
 
             return result;
         }
 
         public bool ParseFromTail(char[] buff)
         {
-            log.Info("Image.ParseFromTail() start byteLen={0}", buff.Length);
+            log.Debug("Image.ParseFromTail() start byteLen={0}", buff.Length);
             bool result = false;
 
             try
@@ -131,7 +131,7 @@ namespace Photomv
             {
                 log.Error("Image.ParseFromTail() IndexOutOfRangeException occured. {0}", e.GetType());
             }
-            log.Info("Image.ParseFromTail() end");
+            log.Debug("Image.ParseFromTail() end");
 
             return result;
         }
@@ -140,7 +140,7 @@ namespace Photomv
         {
             try
             {
-                log.Info("Image.PrepareCopyFile() start outdir={0}", outDir);
+                log.Debug("Image.PrepareCopyFile() start outdir={0}", outDir);
                 if (!(Directory.Exists(outDir)))
                 {
                     Directory.CreateDirectory(outDir);
@@ -175,7 +175,7 @@ namespace Photomv
                 buffer2.Append("\\");
                 buffer2.Append(Filename);
                 destfilename = buffer2.ToString();
-                log.Info("Image.PreparedCopyFile() end dest={0}", destfilename);
+                log.Debug("Image.PreparedCopyFile() end dest={0}", destfilename);
                 if ((File.Exists(destfilename)))
                 {
                     log.Info("Image.PreparedCopyFile() Already exsists {0}", destfilename);

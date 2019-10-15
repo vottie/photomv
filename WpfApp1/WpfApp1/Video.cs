@@ -15,7 +15,7 @@ namespace Photomv
         }
         public void Execute(string dest)
         {
-            log.Debug("Video.Execute() dest={0} orig={1} filename={2}", dest, OrgPath, Filename);
+            log.Info("Video.Execute() dest={0} orig={1} filename={2}", dest, OrgPath, Filename);
             try
             {
                 FileStream fs;
