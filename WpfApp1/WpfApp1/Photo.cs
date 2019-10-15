@@ -31,7 +31,7 @@ namespace Photomv
                 char[] cBuff = System.Text.Encoding.GetEncoding(932).GetString(buff).ToCharArray();
                 if (!Parse(cBuff))
                 {
-                    log.Error("Fail {0}", OrgPath);
+                    log.Error("Photo.Execute() Fail {0}", OrgPath);
                     return;
                 }
 

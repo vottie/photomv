@@ -45,7 +45,7 @@ namespace Photomv
 
                     if (!ParseFromTail(rcBuff))
                     {
-                        log.Error("Fail {0}", OrgPath);
+                        log.Error("Video.Execute() Parse Fail {0}", OrgPath);
                         return;
                     }
                 }

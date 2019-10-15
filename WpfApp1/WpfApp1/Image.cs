@@ -73,11 +73,11 @@ namespace Photomv
                             Minute = minute;
                             Second = second;
                             result = true;
+                            log.Debug("Image.Parse() {0}/{1}/{2} {3}:{4}:{5}", year, month, day, hour, minute, second);
                             break;
                         }
                     }
                 }
-                log.Debug("Image.Parse() {0}/{1}/{2} {3}:{4}:{5}", year, month, day, hour, minute, second);
             }
             catch (System.IndexOutOfRangeException e)
             {
