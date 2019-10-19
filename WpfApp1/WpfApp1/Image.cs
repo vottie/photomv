@@ -169,19 +169,35 @@ namespace Photomv
                 {
                     Directory.CreateDirectory(monthDir);
                 }
+
                 /**
                  * create dest file path
                  */
                 buffer2.Append("\\");
-                buffer2.Append(Filename);
+                if (PhotoMVSingleton.GetInstance().IsRename)
+                {
+                    string ext = Path.GetExtension(Filename);
+                    string new_name = Year + "-" + Month + "-" + Day + "_" + Hour + Minute + Second + ext;
+                    buffer2.Append(new_name);
+                    log.Debug("Image.Rename() New Name = {0}", new_name);
+                }
                 destfilename = buffer2.ToString();
+
                 log.Debug("Image.PreparedCopyFile() end dest={0}", destfilename);
                 if ((File.Exists(destfilename)))
                 {
                     log.Info("Image.PreparedCopyFile() Already exsists {0}", destfilename);
                     PhotoMVStat.already_exists++;
                     string newname = Rename(destfilename);
-                    return false;
+                    if (newname != "")
+                    {
+                        this.DestFilename = newname;
+                        return true;
+                    } else
+                    {
+                        PhotoMVStat.copy_fail_times++;
+                        return false;
+                    }
                 }
                 return true;
             }
@@ -192,6 +208,9 @@ namespace Photomv
             }
         }
 
+        //
+        // Rename arguments fname is full path
+        //
         public string Rename(string fname)
         {
             log.Info("Image.Rename start");
@@ -201,33 +220,74 @@ namespace Photomv
             int last = tmpname.Length;
             log.Info("Image.Rename tmpname length {0}", last);
 
-            string result = "";
-            if (tmpname[last - 2] == '_')
+            // file name check(already numbering?)
+            // rename try. append _1
+            // check
+            // already exists?
+            // increment
+
+            string dir = Path.GetDirectoryName(fname);
+            string[] files = Directory.GetFileSystemEntries(dir);
+            for (int i = 0; i < files.Length; i++)
             {
-                Console.WriteLine("hit");
-                for (int i = 0; i < 10; i++)
-                {
-                    if (tmpname[last - 1] == (char)i)
-                    {
-                        log.Info("Image.Rename already exsists file {0}", tmpname);
-                        continue;
-                    } else
-                    {
-                        tmpname.Remove(last - 1, 1).Insert(last - 1, ((char)i).ToString());
-                        log.Info("Image.Rename done {0}", tmpname);
-                    }
-                }
+                log.Debug("Image.Rename files[{0}]={1}", i, files[i]);
+            }
+
+            string result = "";
+            result = dir + "\\" + tmpname + "_1" + ext;
+            if (!File.Exists(result))
+            {
+                log.Info("Image.Rename orig:{0} new:{1}", fname, result);
+                // tmp name is not exists.
+                return result;
             } else
             {
-                // TODO fname separete with name and suffix
-                result = tmpname + "_0" + ext;
-                if (!File.Exists(result))
+                log.Debug("Image.Rename Already exists, another numbering {0}", result);
+
+            }
+
+            // _1 is already exists.
+            log.Debug("Image.Rename tmpname {0}", tmpname);
+            if (tmpname[last - 2] == '_')
+            {
+                char number = tmpname[last - 1];
+                int n = Convert.ToInt32(number);
+                if ((n == 0) || (n >= 10))
                 {
-                    log.Info("Image.Rename orig:{0} new:{1}", fname, tmpname);
-                    // tmp name is not exists.
-                    return result;
+                    log.Error("Image.Rename cannot rename file {0}", fname);
+                    return "";
+                }
+
+
+
+                for (int i = n; i < 10; i++)
+                {
+                    string newname = tmpname.Substring(0, last - 2);
+                    string numbering = "_" + number;
+                    newname = dir + "\\" + newname + numbering + ext;
+                    log.Debug("Image.Rename() newname is {0}", newname);
+                    if (!File.Exists(newname))
+                    {
+                        log.Debug("Image.Rename() rename numbering {0}", newname);
+                        return newname;
+                    }
+                }
+                log.Debug("Image.Rename 0x0001");
+            }
+            else
+            {
+                for (int i = 2; i < 10; i++)
+                {
+                    // The name of file '_' is not used.
+                    string re_rename = dir + "\\" + tmpname + "_" + Convert.ToString(i) + ext;
+                    if (!File.Exists(re_rename))
+                    {
+                        log.Debug("Image.Rename() rename numbering {0}", re_rename);
+                        return re_rename;
+                    }
                 }
             }
+            log.Debug("Image.Rename 0x0002");
             return "";
         }
     }
