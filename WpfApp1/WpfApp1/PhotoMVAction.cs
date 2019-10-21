@@ -12,7 +12,7 @@ namespace Photomv
     {
         private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
 
-        public static readonly string version = "0.9.0";
+        public static readonly string version = "0.9.1";
 
         string src, dest;
         List<Photo> photos = new List<Photo>();

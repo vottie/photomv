@@ -12,7 +12,8 @@ namespace Photomv
 
         private static PhotoMVStat _singleton = new PhotoMVStat();
 
-        public static uint copy_success_times;
+        public static uint copy_success_photos;
+        public static uint copy_success_videos;
         public static uint copy_fail_times;
         public static uint already_exists;
 
@@ -27,7 +28,8 @@ namespace Photomv
 
         public void Initialize()
         {
-            copy_success_times = 0;
+            copy_success_photos = 0;
+            copy_success_videos = 0;
             copy_fail_times = 0;
             already_exists = 0;
         }
@@ -35,9 +37,10 @@ namespace Photomv
         public void Output()
         {
             log.Info("========= PhotoMV Statistics ========");
-            log.Info("copy successed : {0} times", copy_success_times);
-            log.Info("copy failed    : {0} times", copy_fail_times);
-            log.Info("already exists : {0} times", already_exists);
+            log.Info("copy successed photos : {0} times", copy_success_photos);
+            log.Info("copy successed videos : {0} times", copy_success_videos);
+            log.Info("copy failed           : {0} times", copy_fail_times);
+            log.Info("already exists        : {0} times", already_exists);
             log.Info("========= PhotoMV Statistics ========");
         }
     }

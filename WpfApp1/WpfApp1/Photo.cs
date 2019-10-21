@@ -38,10 +38,10 @@ namespace Photomv
 
                 if (PrepareCopyFile(dest))
                 {
+                    PhotoMVStat.copy_success_photos++;
                     if (PhotoMVSingleton.GetInstance().Mode == "debug")
                     {
                         log.Debug("Photo.Execute pseudo");
-                        PhotoMVStat.copy_success_times++;
                         return;
                     }
                     File.Copy(OrgPath, DestFilename, false);
