@@ -8,14 +8,14 @@ namespace Photomv
 {
     class Photo : Image
     {
-        private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
+        private static Logger log = Logger.GetInstance("./photomv.log", true);
 
         public Photo(string path, string name) : base(path, name)
         {
         }
         public void Execute(string dest)
         {
-            log.Info("Image.Execute() dest={0} orig={1} filename={2}", dest, OrgPath, Filename);
+            log.Info("Photo.Execute() dest={0} orig={1} filename={2}", dest, OrgPath, Filename);
             try
             {
                 FileStream fs;
@@ -33,6 +33,11 @@ namespace Photomv
                 {
                     log.Error("Photo.Execute() Fail {0}", OrgPath);
                     PhotoMVStat.copy_fail_times++;
+
+                    string errfile = PhotoMVSingleton.GetInstance().Errfile;
+                    string errmsg = "original=" + OrgPath + Environment.NewLine;
+                    File.AppendAllText(errfile, errmsg);
+
                     return;
                 }
 
@@ -42,9 +47,11 @@ namespace Photomv
                     if (PhotoMVSingleton.GetInstance().Mode == "debug")
                     {
                         log.Debug("Photo.Execute pseudo");
-                        return;
                     }
-                    File.Copy(OrgPath, DestFilename, false);
+                    else
+                    {
+                        File.Copy(OrgPath, DestFilename, false);
+                    }
                 }
             }
             catch (System.IO.IOException e)
@@ -61,7 +68,10 @@ namespace Photomv
                  */
                 log.Error("Error {0}", e.GetType());
             }
+            string logfile = PhotoMVSingleton.GetInstance().Logfile;
+            string logmsg = "original=" + OrgPath + " dest=" + DestFilename + Environment.NewLine;
+            File.AppendAllText(logfile, logmsg);
+            log.Debug("Photo.Execute end orig={0} dest={1}", OrgPath, DestFilename);
         }
-
     }
 }

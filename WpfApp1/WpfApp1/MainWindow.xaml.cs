@@ -24,7 +24,7 @@ namespace Photomv
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
+        private static Logger log = Logger.GetInstance("./photomv.log", true);
         SetupFile ini = new SetupFile("./photomv.ini");
         public MainWindow()
         {
@@ -45,6 +45,7 @@ namespace Photomv
             string outDir2 = ini["section", "output_dir2"];
             string outDir1 = ini["section", "output_dir1"];
             string logfile = ini["section", "logfile"];
+            string errfile = ini["section", "errfile"];
             string mode = ini["section", "mode"];
 
             // Set Parameter
@@ -53,22 +54,41 @@ namespace Photomv
                 pmvMgr.Mode = "debug";
             }
 
+            var now = System.DateTime.Now;
+            string fmt = now.ToString("yyyyMMddHHmmss");
+            // log file
             if (logfile == "")
             {
-                ini["section", "logfile"] = "photomv.log";
+                ini["section", "logfile"] = "photomv_success.txt";
             }
+            string ext = System.IO.Path.GetExtension(logfile);
+            string tmpname = System.IO.Path.GetFileNameWithoutExtension(logfile);
+            logfile = tmpname + "_" + fmt + ext;
             if (File.Exists(logfile) == false)
             {
                 File.CreateText(logfile);
+                pmvMgr.Logfile = logfile;
             }
-            Console.WriteLine(logfile);
+            // error file
+            if (errfile == "")
+            {
+                ini["section", "errfile"] = "photomv_error.txt";
+            }
+
+            string errtmpname = System.IO.Path.GetFileNameWithoutExtension(errfile);
+            errfile = errfile + "_" + fmt + ext;
+            if (File.Exists(errfile) == false)
+            {
+                File.CreateText(errfile);
+                pmvMgr.Errfile = errfile;
+            }
 
             //Stream log_file = File.Create("photomv_trace.log");
             //TextWriterTraceListener myTextListener = new TextWriterTraceListener(log_file);
-            TextWriterTraceListener myTextListener = new TextWriterTraceListener();
-            Trace.Listeners.Add(myTextListener);
+            //TextWriterTraceListener myTextListener = new TextWriterTraceListener();
+            //Trace.Listeners.Add(myTextListener);
 
-            Trace.Write("MainWindow start");
+            //Trace.Write("MainWindow start");
 
             InitializeComponent();
             log.Info("PhotoMV mode={0}", pmvMgr.Mode);

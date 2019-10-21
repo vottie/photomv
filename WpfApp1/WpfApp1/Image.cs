@@ -9,7 +9,7 @@ namespace Photomv
 {
     public class Image
     {
-        private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
+        private static Logger log = Logger.GetInstance("./photomv.log", true);
 
         private string orgPath;
         private string year;
@@ -196,6 +196,11 @@ namespace Photomv
                     } else
                     {
                         PhotoMVStat.copy_fail_times++;
+
+                        string errfile = PhotoMVSingleton.GetInstance().Errfile;
+                        string errmsg = "original=" + OrgPath + Environment.NewLine;
+                        File.AppendAllText(errfile, errmsg);
+
                         return false;
                     }
                 }

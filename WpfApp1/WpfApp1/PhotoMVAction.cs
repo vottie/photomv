@@ -10,7 +10,7 @@ namespace Photomv
 {
     class PhotoMVAction
     {
-        private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
+        private static Logger log = Logger.GetInstance("./photomv.log", true);
 
         public static readonly string version = "0.9.1";
 

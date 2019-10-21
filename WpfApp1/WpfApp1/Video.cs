@@ -9,7 +9,7 @@ namespace Photomv
 {
     class Video : Image
     {
-        private static Logger log = Logger.GetInstance("./PhotomvLog.txt", true);
+        private static Logger log = Logger.GetInstance("./photomv.log", true);
         public Video(string path, string name) : base(path, name)
         {
         }
@@ -47,6 +47,11 @@ namespace Photomv
                     {
                         log.Error("Video.Execute() Parse Fail {0}", OrgPath);
                         PhotoMVStat.copy_fail_times++;
+
+                        string errfile = PhotoMVSingleton.GetInstance().Errfile;
+                        string errmsg = "original=" + OrgPath + Environment.NewLine;
+                        File.AppendAllText(errfile, errmsg);
+
                         return;
                     }
                 }
@@ -60,9 +65,11 @@ namespace Photomv
                     if (PhotoMVSingleton.GetInstance().Mode == "debug")
                     {
                         log.Debug("Video.Execute() pseudo");
-                        return;
                     }
-                    File.Copy(OrgPath, DestFilename, false);
+                    else
+                    {
+                        File.Copy(OrgPath, DestFilename, false);
+                    }
                 }
             }
             catch (System.IO.IOException e)
@@ -79,6 +86,10 @@ namespace Photomv
                  */
                 log.Error("Error {0}", e.GetType());
             }
+            string logfile = PhotoMVSingleton.GetInstance().Logfile;
+            string logmsg = "original=" + OrgPath + " dest=" + DestFilename + Environment.NewLine;
+            File.AppendAllText(logfile, logmsg);
+            log.Debug("Video.Execute end orig={0} dest={1}", OrgPath, DestFilename);
         }
     }
 }
