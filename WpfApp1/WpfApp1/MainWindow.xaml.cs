@@ -108,6 +108,13 @@ namespace Photomv
             }
         }
 
+        private void ExitButtonClick(object sender, RoutedEventArgs e)
+        {
+            log.Info("PhotoMV exit");
+            this.Close();    
+        }
+
+
         void CommandExecuted(object sender, RoutedEventArgs e)
         {
             // = Logger.GetInstance()
