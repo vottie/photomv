@@ -55,7 +55,7 @@ namespace Photomv
             }
 
             var now = System.DateTime.Now;
-            string fmt = now.ToString("yyyyMMddHHmmss");
+            string fmt = now.ToString("yyyyMMdd_HHmmss");
             // log file
             if (logfile == "")
             {

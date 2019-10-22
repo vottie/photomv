@@ -180,6 +180,9 @@ namespace Photomv
                     string new_name = Year + "-" + Month + "-" + Day + "_" + Hour + Minute + Second + ext;
                     buffer2.Append(new_name);
                     log.Debug("Image.Rename() New Name = {0}", new_name);
+                } else
+                {
+                    buffer2.Append(Filename);
                 }
                 destfilename = buffer2.ToString();
 
