@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WpfApp1\WpfApp1.csproj" />
+    <ProjectReference Include="..\Photomv\Photomv.csproj" />
   </ItemGroup>
 
 </Project>
