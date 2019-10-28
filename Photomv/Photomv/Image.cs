@@ -9,6 +9,11 @@ namespace Photomv
 {
     public class Image
     {
+        public static readonly char YEAR_PREFIX   = '2';
+        public static readonly char DELIM_COLON   = ':';
+        public static readonly char ZERO          = '0';
+        public static readonly char DELIM_HYPHEN  = '-';
+
         private static Logger log = Logger.GetInstance("./photomv.log", true);
 
         private string orgPath;
@@ -49,11 +54,11 @@ namespace Photomv
             {
                 for (int i = 0; i < buff.Length - 1; i++)
                 {
-                    if (buff[i] != '2')
+                    if (buff[i] != YEAR_PREFIX)
                         continue;
                     // search 2yyy:mm:dd
                     // i's value is '2'
-                    if ((buff[i + 1] == '0') && (buff[i + 4] == ':') && (buff[i + 7] == ':'))
+                    if ((buff[i + 1] == ZERO) && (buff[i + 4] == DELIM_COLON) && (buff[i + 7] == DELIM_COLON))
                     {
                         string year = new string(buff, i, 4);
                         string month = new string(buff, i + 5, 2);
@@ -63,7 +68,7 @@ namespace Photomv
                         Month = month;
                         Day = day;
 
-                        if ((buff[i + 10] == 0x20) && (buff[i + 13] == ':') && (buff[i + 16] == ':'))
+                        if ((buff[i + 10] == 0x20) && (buff[i + 13] == DELIM_COLON) && (buff[i + 16] == DELIM_COLON))
                         {
                             string hour = new string(buff, i + 11, 2);
                             string minute = new string(buff, i + 14, 2);
@@ -97,11 +102,11 @@ namespace Photomv
             {
                 for (int i = 0; i < buff.Length - 1; i++)
                 {
-                    if (buff[i] != '2')
+                    if (buff[i] != YEAR_PREFIX)
                         continue;
                     // search 2yyy-mm-dd
                     // i's value is '2'
-                    if ((buff[i + 1] == '0') && (buff[i + 4] == '-') && (buff[i + 7] == '-'))
+                    if ((buff[i + 1] == ZERO) && (buff[i + 4] == DELIM_HYPHEN) && (buff[i + 7] == DELIM_HYPHEN))
                     {
                         string year = new string(buff, i, 4);
                         string month = new string(buff, i + 5, 2);
@@ -111,7 +116,7 @@ namespace Photomv
                         Month = month;
                         Day = day;
                         // 2yyyy-mm-ddThh:mm:ss (T is 0x54)
-                        if ((buff[i + 10] == 0x54) && (buff[i + 13] == ':') && (buff[i + 16] == ':'))
+                        if ((buff[i + 10] == 0x54) && (buff[i + 13] == DELIM_COLON) && (buff[i + 16] == DELIM_COLON))
                         {
                             string hour = new string(buff, i + 11, 2);
                             string minute = new string(buff, i + 14, 2);
