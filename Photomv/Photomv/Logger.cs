@@ -16,12 +16,12 @@ namespace Photomv
         private static readonly string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss.fff";
         private StreamWriter stream = null;
         private readonly bool consoleOut;
-
         private static Logger singleton = null;
+        private Level logLv;
 
         public static Logger GetInstance(string logFilePath, bool consoleOut = false)
         {
-            if(singleton == null)
+            if (singleton == null)
             {
                 singleton = new Logger(logFilePath, consoleOut);
             }
@@ -32,6 +32,8 @@ namespace Photomv
         {
             singleton = new Logger(logFilePath, consoleOut);
         }
+
+        public Level LogLv { get => logLv; set => logLv = value; }
 
         private Logger(string logFilePath, bool consoleOut)
         {
@@ -54,6 +56,11 @@ namespace Photomv
 
         private void Write(Level level, string text)
         {
+            if (level > logLv)
+            {
+                return;
+            }
+
             char l = level.ToString()[0];
             string lvl = "|" + l + "|";
             string log = string.Format(LOG_FORMAT, DateTime.Now.ToString(DATETIME_FORMAT), lvl, text);
@@ -129,10 +136,9 @@ namespace Photomv
         {
             Info(string.Format(format, args));
         }
-
-        private enum Level
+        public enum Level
         {
-            ERROR,
+            ERROR = 1,
             WARN,
             INFO,
             DEBUG,

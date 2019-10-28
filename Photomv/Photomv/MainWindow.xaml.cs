@@ -53,6 +53,10 @@ namespace Photomv
             {
                 pmvMgr.Mode = "debug";
             }
+            else
+            {
+                log.LogLv = Logger.Level.INFO;
+            }
 
             var now = System.DateTime.Now;
             string fmt = now.ToString("yyyyMMdd_HHmmss");
