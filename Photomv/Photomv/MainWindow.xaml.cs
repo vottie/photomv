@@ -34,15 +34,7 @@ namespace Photomv
             // ini["section", "key"] = "vallue";
 
             // read ini file
-            string inDir5 = ini["section", "input_dir5"];
-            string inDir4 = ini["section", "input_dir4"];
-            string inDir3 = ini["section", "input_dir3"];
-            string inDir2 = ini["section", "input_dir2"];
-            string inDir1 = ini["section", "input_dir1"];
-            string outDir5 = ini["section", "output_dir5"];
-            string outDir4 = ini["section", "output_dir4"];
-            string outDir3 = ini["section", "output_dir3"];
-            string outDir2 = ini["section", "output_dir2"];
+            string inDir1  = ini["section", "input_dir1"];
             string outDir1 = ini["section", "output_dir1"];
             string logfile = ini["section", "logfile"];
             string errfile = ini["section", "errfile"];
@@ -86,13 +78,6 @@ namespace Photomv
                 File.CreateText(errfile);
                 pmvMgr.Errfile = errfile;
             }
-
-            //Stream log_file = File.Create("photomv_trace.log");
-            //TextWriterTraceListener myTextListener = new TextWriterTraceListener(log_file);
-            //TextWriterTraceListener myTextListener = new TextWriterTraceListener();
-            //Trace.Listeners.Add(myTextListener);
-
-            //Trace.Write("MainWindow start");
 
             InitializeComponent();
             log.Info("PhotoMV mode={0}", pmvMgr.Mode);
@@ -146,8 +131,10 @@ namespace Photomv
             string inDir = textBox1.Text;
             string outDir = textBox2.Text;
             bool isRename = (bool)RenameCheck.IsChecked;
+            bool isDebug = (bool)Test.IsChecked;
             PhotoMVSingleton mgr = PhotoMVSingleton.GetInstance();
             mgr.IsRename = isRename;
+            if (isDebug) mgr.Mode = "debug";
 
             log.Info("MainWindow.CommandExecuted start");
             PhotoMVAction pmv = new PhotoMVAction(inDir, outDir);
