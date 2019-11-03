@@ -9,7 +9,7 @@ namespace Photomv
 {
     class Video : Image
     {
-        private static Logger log = Logger.GetInstance("./photomv.log", true);
+        private static Logger log = Logger.GetInstance(Common.TRCFILE, true);
         public Video(string path, string name) : base(path, name)
         {
         }

@@ -8,7 +8,7 @@ namespace Photomv
 {
     class PhotoMVStat
     {
-        private static Logger log = Logger.GetInstance("./photomv.log", true);
+        private static Logger log = Logger.GetInstance(Common.TRCFILE, true);
 
         private static PhotoMVStat _singleton = new PhotoMVStat();
 

@@ -24,8 +24,9 @@ namespace Photomv
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static Logger log = Logger.GetInstance("./photomv.log", true);
-        SetupFile ini = new SetupFile("./photomv.ini");
+
+        private static Logger log = Logger.GetInstance(Common.TRCFILE, true);
+        SetupFile ini = new SetupFile(Common.INIFILE);
         public MainWindow()
         {
             PhotoMVSingleton pmvMgr = PhotoMVSingleton.GetInstance();
@@ -40,6 +41,7 @@ namespace Photomv
             string errfile = ini["section", "errfile"];
             string mode = ini["section", "mode"];
 
+            /**
             // Set Parameter
             if (mode == "debug")
             {
@@ -49,13 +51,14 @@ namespace Photomv
             {
                 log.LogLv = Logger.Level.INFO;
             }
+            */
 
             var now = System.DateTime.Now;
             string fmt = now.ToString("yyyyMMdd_HHmmss");
             // log file
             if (logfile == "")
             {
-                ini["section", "logfile"] = "photomv_success.txt";
+                ini["section", "logfile"] = Common.LOGILE;
             }
             string ext = System.IO.Path.GetExtension(logfile);
             string tmpname = System.IO.Path.GetFileNameWithoutExtension(logfile);
@@ -68,7 +71,7 @@ namespace Photomv
             // error file
             if (errfile == "")
             {
-                ini["section", "errfile"] = "photomv_error.txt";
+                ini["section", "errfile"] = Common.ERRFILE;
             }
 
             string errtmpname = System.IO.Path.GetFileNameWithoutExtension(errfile);
@@ -126,15 +129,21 @@ namespace Photomv
 
         void CommandExecuted(object sender, RoutedEventArgs e)
         {
-            // = Logger.GetInstance()
-            // MessageBox.Show("Hello world");
             string inDir = textBox1.Text;
             string outDir = textBox2.Text;
             bool isRename = (bool)RenameCheck.IsChecked;
             bool isDebug = (bool)Test.IsChecked;
             PhotoMVSingleton mgr = PhotoMVSingleton.GetInstance();
             mgr.IsRename = isRename;
-            if (isDebug) mgr.Mode = "debug";
+            if (isDebug)
+            {
+                mgr.Mode = "debug";
+                log.LogLv = Logger.Level.DEBUG;
+            }
+            else
+            {
+                log.LogLv = Logger.Level.INFO;
+            }
 
             log.Info("MainWindow.CommandExecuted start");
             PhotoMVAction pmv = new PhotoMVAction(inDir, outDir);

@@ -14,7 +14,7 @@ namespace Photomv
         public static readonly char ZERO          = '0';
         public static readonly char DELIM_HYPHEN  = '-';
 
-        private static Logger log = Logger.GetInstance("./photomv.log", true);
+        private static Logger log = Logger.GetInstance(Common.TRCFILE, true);
 
         private string orgPath;
         private string year;

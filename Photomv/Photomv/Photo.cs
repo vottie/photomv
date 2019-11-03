@@ -8,7 +8,7 @@ namespace Photomv
 {
     class Photo : Image
     {
-        private static Logger log = Logger.GetInstance("./photomv.log", true);
+        private static Logger log = Logger.GetInstance(Common.TRCFILE, true);
 
         public Photo(string path, string name) : base(path, name)
         {
