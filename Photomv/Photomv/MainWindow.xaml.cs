@@ -151,6 +151,11 @@ namespace Photomv
             log.Info("MainWindow.CommandExecuted end");
 
             Trace.Flush();
+
+            if (PhotoMVSingleton.GetInstance().Result == 0)
+            {
+                resultmsg.Text = "正常終了しました。";
+            }
         }
 
         protected virtual void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -114,10 +114,12 @@ namespace Photomv
                 //img.ResultMessage;
             }
 
-
             PhotoMVStat stat = PhotoMVStat.GetInstance();
             stat.Output();
             log.Info("PhotoMVAction.execute() end");
+
+            // set result
+            PhotoMVSingleton.GetInstance().Result = 0;
         }
     }
 }

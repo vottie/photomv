@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Photomv"
         mc:Ignorable="d"
-        Title="PhotoMV" Height="300" Width="500"
+        Title="PhotoMV" Height="337" Width="500"
         Closing="WindowClosing">
     <Grid>
         <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="30" Margin="30,60,0,0" TextWrapping="Wrap" Text="input" VerticalAlignment="Top" Width="200"/>
@@ -16,6 +16,7 @@
         <Button Content="終了" HorizontalAlignment="Left" Height="30" Margin="205,210,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.533,1" Click="ExitButtonClick"/>
         <CheckBox Content="Rename" HorizontalAlignment="Left" Height="15" Margin="60,170,0,0"  VerticalAlignment="Top" Width="80" Name="RenameCheck" IsChecked="True"/>
         <CheckBox Content="Test"   HorizontalAlignment="Left" Height="15" Margin="160,170,0,0" VerticalAlignment="Top" Width="80" Name="Test"        IsChecked="True"/>
+        <TextBlock x:Name="resultmsg"  HorizontalAlignment="Left" Height="20" Margin="30,265,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="400"/>
 
 
     </Grid>
