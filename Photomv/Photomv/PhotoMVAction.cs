@@ -106,26 +106,32 @@ namespace Photomv
 
             SearchDir(src);
 
-            foreach(Photo photo in photos)
+            int result = 0;
+            PhotoMVSingleton.GetInstance().Result = result;
+
+            foreach (Photo photo in photos)
             {
-                photo.Execute(dest);
-                //img.ResultMessage;
+                result = photo.Execute(dest);
+                if (result != Common.NORMAL_END)
+                {
+                    PhotoMVSingleton.GetInstance().Result = result;
+                }
             }
 
             foreach (Video video in videos)
             {
-                video.Execute(dest);
-                //img.ResultMessage;
+                result = video.Execute(dest);
+                if (result != Common.NORMAL_END)
+                {
+                    PhotoMVSingleton.GetInstance().Result = result;
+                }
             }
 
             PhotoMVStat stat = PhotoMVStat.GetInstance();
             stat.Output();
             log.Info("PhotoMVAction.execute() end");
 
-            // set result
-            PhotoMVSingleton.GetInstance().Result = 0;
-
-            return 0;
+            return PhotoMVSingleton.GetInstance().Result;
         }
     }
 }

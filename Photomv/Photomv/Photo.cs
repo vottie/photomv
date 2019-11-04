@@ -13,7 +13,7 @@ namespace Photomv
         public Photo(string path, string name) : base(path, name)
         {
         }
-        public void Execute(string dest)
+        public int Execute(string dest)
         {
             log.Info("Photo.Execute() dest={0} orig={1} filename={2}", dest, OrgPath, Filename);
             try
@@ -38,7 +38,7 @@ namespace Photomv
                     string errmsg = "original=" + OrgPath + Environment.NewLine;
                     File.AppendAllText(errfile, errmsg);
 
-                    return;
+                    return Common.PARSE_FAILURE;
                 }
 
                 if (PrepareCopyFile(dest))
@@ -58,6 +58,7 @@ namespace Photomv
             {
                 log.Error("IOException occured. {0}", e.HResult);
                 log.Error("IOException occured. {0}", e.GetType());
+                return Common.IO_ERR;
             }
             catch (UnauthorizedAccessException e)
             {
@@ -67,11 +68,13 @@ namespace Photomv
                  * UnauthorizedAccessException occured.
                  */
                 log.Error("Error {0}", e.GetType());
+                return Common.UNAUTH_ACCESS_ERR;
             }
             string logfile = PhotoMVSingleton.GetInstance().Logfile;
             string logmsg = "original=" + OrgPath + " dest=" + DestFilename + Environment.NewLine;
             File.AppendAllText(logfile, logmsg);
             log.Debug("Photo.Execute end orig={0} dest={1}", OrgPath, DestFilename);
+            return Common.NORMAL_END;
         }
     }
 }

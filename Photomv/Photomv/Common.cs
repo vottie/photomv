@@ -17,6 +17,12 @@ namespace Photomv
         public static readonly string INIFILE = "./photomv.ini";
         public static readonly string TRCFILE = "./photomv.log";
 
+        // result
+        public static readonly int NORMAL_END = 0;
+        public static readonly int IO_ERR = -1;
+        public static readonly int UNAUTH_ACCESS_ERR = -2;
+        public static readonly int PARSE_FAILURE = -3;
+
 
 
 

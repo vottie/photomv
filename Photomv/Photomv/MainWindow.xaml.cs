@@ -162,6 +162,10 @@ namespace Photomv
             {
                 resultmsg.Text = "正常終了しました。";
             }
+            else
+            {
+                resultmsg.Text = "異常がありました。";
+            }
         }
 
         protected virtual void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)

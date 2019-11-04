@@ -87,6 +87,7 @@ namespace Photomv
             catch (System.IndexOutOfRangeException e)
             {
                 log.Error("Image.Parse() IndexOutOfRangeException occured. {0}", e.GetType());
+                return result;
             }
             log.Debug("Image.Parse() end");
 
@@ -135,6 +136,7 @@ namespace Photomv
             catch (System.IndexOutOfRangeException e)
             {
                 log.Error("Image.ParseFromTail() IndexOutOfRangeException occured. {0}", e.GetType());
+                return result;
             }
             log.Debug("Image.ParseFromTail() end");
 
