@@ -145,9 +145,15 @@ namespace Photomv
                 log.LogLv = Logger.Level.INFO;
             }
 
-            log.Info("MainWindow.CommandExecuted start");
+            int pid = System.Diagnostics.Process.GetCurrentProcess().Id;
+            int tid = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
+            log.Info("MainWindow.CommandExecuted start PID={0} TID={1}", pid, tid);
             PhotoMVAction pmv = new PhotoMVAction(inDir, outDir);
-            pmv.Execute();
+            Task<int> task = Task.Run(() =>
+            {
+                return pmv.Execute();
+            });
             log.Info("MainWindow.CommandExecuted end");
 
             Trace.Flush();

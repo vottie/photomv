@@ -96,9 +96,13 @@ namespace Photomv
             }
         }
 
-        public void Execute()
+        public int Execute()
         {
-            log.Debug("PhotoMVAction.execute() start in={0} out={1}", this.src, this.dest);
+            log.Info("PhotoMVAction.execute() start in={0} out={1}", this.src, this.dest);
+
+            int pid = System.Diagnostics.Process.GetCurrentProcess().Id;
+            int tid = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            log.Debug("PhotoMVAction.execute() start PID={0} TID={1}", pid, tid);
 
             SearchDir(src);
 
@@ -120,6 +124,8 @@ namespace Photomv
 
             // set result
             PhotoMVSingleton.GetInstance().Result = 0;
+
+            return 0;
         }
     }
 }
