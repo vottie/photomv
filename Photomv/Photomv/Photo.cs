@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Photo.cs
+ * 
+ * Copyright (c) 2019 vottie <tsuboi23@gmail.com>
+ * 
+ * This software is released under the MIT License.
+ * see https://opensource.org/licenses/MIT
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;

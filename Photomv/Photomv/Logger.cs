@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Logger.cs
+ * 
+ * Copyright (c) 2019 vottie <tsuboi23@gmail.com>
+ * 
+ * This software is released under the MIT License.
+ * see https://opensource.org/licenses/MIT
+ */
+using System;
 using System.IO;
 using System.Text;
 
